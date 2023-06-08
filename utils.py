@@ -1,15 +1,30 @@
-import requests
 import numpy as np
-from models.deep_colorization.colorizers import postprocess_tens, preprocess_img, load_img
+import requests
+import streamlit as st
 from PIL import Image
+
+from models.deep_colorization.colorizers import postprocess_tens, preprocess_img, load_img, eccv16, siggraph17
 
 
 # Define a function that we can use to load lottie files from a link.
+@st.cache_data()
 def load_lottieurl(url: str):
     r = requests.get(url)
     if r.status_code != 200:
         return None
     return r.json()
+
+
+@st.cache_resource()
+def change_model(current_model, model):
+    if current_model != model:
+        if model == "ECCV16":
+            loaded_model = eccv16(pretrained=True).eval()
+        elif model == "SIGGRAPH17":
+            loaded_model = siggraph17(pretrained=True).eval()
+        return loaded_model
+    else:
+        raise Exception("Model is the same as the current one.")
 
 
 def format_time(seconds: float) -> str:

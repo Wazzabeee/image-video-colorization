@@ -9,26 +9,13 @@ import streamlit as st
 from streamlit_lottie import st_lottie
 from tqdm import tqdm
 
-from models.deep_colorization.colorizers import eccv16, siggraph17
-from utils import load_lottieurl, format_time, colorize_frame
+from models.deep_colorization.colorizers import eccv16
+from utils import load_lottieurl, format_time, colorize_frame, change_model
 
 st.set_page_config(page_title="Image & Video Colorizer", page_icon="🎨", layout="wide")
 
-
 loaded_model = eccv16(pretrained=True).eval()
 current_model = "None"
-
-
-def change_model(current_model, model):
-    if current_model != model:
-        if model == "ECCV16":
-            loaded_model = eccv16(pretrained=True).eval()
-        elif model == "SIGGRAPH17":
-            loaded_model = siggraph17(pretrained=True).eval()
-        return loaded_model
-    else:
-        raise Exception("Model is the same as the current one.")
-
 
 col1, col2 = st.columns([1, 3])
 with col1:
@@ -82,10 +69,12 @@ def main():
                         # Colorize video frames and store in a list
                         output_frames = []
                         total_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
-                        progress_bar = st.empty()
+                        progress_bar = st.progress(0)  # Create a progress bar
 
                         start_time = time.time()
-                        for i in tqdm(range(total_frames), unit='frame', desc="Progress"):
+                        time_text = st.text("Time Remaining: ")  # Initialize text value
+
+                        for _ in tqdm(range(total_frames), unit='frame', desc="Progress"):
                             ret, frame = video.read()
                             if not ret:
                                 break
@@ -98,11 +87,12 @@ def main():
                             frames_remaining = total_frames - frames_completed
                             time_remaining = (frames_remaining / frames_completed) * elapsed_time
 
-                            progress_bar.progress(frames_completed / total_frames)
+                            progress_bar.progress(frames_completed / total_frames)  # Update progress bar
 
                             if frames_completed < total_frames:
-                                progress_bar.text(f"Time Remaining: {format_time(time_remaining)}")
+                                time_text.text(f"Time Remaining: {format_time(time_remaining)}")  # Update text value
                             else:
+                                time_text.empty()  # Remove text value
                                 progress_bar.empty()
 
                     with st.spinner("Merging frames to video..."):

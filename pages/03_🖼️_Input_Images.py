@@ -1,39 +1,18 @@
 import os
 import zipfile
 
-import requests
 import streamlit as st
 from PIL import Image
 from streamlit_lottie import st_lottie
 
-from models.deep_colorization.colorizers import eccv16, siggraph17
-from utils import colorize_image
+from models.deep_colorization.colorizers import eccv16
+from utils import colorize_image, change_model, load_lottieurl
 
 st.set_page_config(page_title="Image & Video Colorizer", page_icon="🎨", layout="wide")
 
 
-@st.cache_data()
-def load_lottieurl(url: str):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
-
-
 loaded_model = eccv16(pretrained=True).eval()
 current_model = "None"
-
-
-@st.cache_resource()
-def change_model(current_model, model):
-    if current_model != model:
-        if model == "ECCV16":
-            loaded_model = eccv16(pretrained=True).eval()
-        elif model == "SIGGRAPH17":
-            loaded_model = siggraph17(pretrained=True).eval()
-        return loaded_model
-    else:
-        raise Exception("Model is the same as the current one.")
 
 
 col1, col2 = st.columns([1, 3])
