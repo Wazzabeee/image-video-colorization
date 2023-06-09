@@ -68,7 +68,7 @@ def main():
                         with col2:
                             with st.spinner("Colorizing image..."):
                                 out_img, new_img = colorize_image(file, loaded_model)
-                                new_img.save("IMG_" + str(i) + ".jpg")
+                                new_img.save("IMG_" + str(i + 1) + ".jpg")
                                 st.image(out_img, use_column_width="always")
 
                     else:
