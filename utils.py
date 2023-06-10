@@ -17,6 +17,8 @@ def load_lottieurl(url: str):
 
 @st.cache_resource()
 def change_model(current_model, model):
+    loaded_model = "None"
+
     if current_model != model:
         if model == "ECCV16":
             loaded_model = eccv16(pretrained=True).eval()

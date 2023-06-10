@@ -26,7 +26,6 @@ with col2:
     st.write("""
     ## B&W Videos Colorizer
     ##### Upload a black and white video and get a colorized version of it.
-    ###### ➠ If you want to colorize multiple videos just upload them all at once.
     ###### ➠ This space is using CPU Basic so it might take a while to colorize a video.
     ###### ➠ If you want more models and GPU available please support this space by donating.""")
 
