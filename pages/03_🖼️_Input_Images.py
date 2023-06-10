@@ -42,7 +42,7 @@ def main():
     display_results = st.checkbox('Display results in real time', value=True)
 
     # Input for the user to upload images
-    uploaded_file = st.file_uploader("Upload your photos here...", type=['jpg', 'png', 'jpeg'],
+    uploaded_file = st.file_uploader("Upload your images here...", type=['jpg', 'png', 'jpeg'],
                                      accept_multiple_files=True)
 
     # If the user clicks on the button
