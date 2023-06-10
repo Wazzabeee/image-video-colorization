@@ -42,7 +42,7 @@ def main():
     display_results = st.checkbox('Display results in real time', value=True)
 
     # Input for the user to upload images
-    uploaded_file = st.file_uploader("Upload your photos here...", type=['jpg', 'png', 'jpeg'],
+    uploaded_file = st.file_uploader("Upload your images here...", type=['jpg', 'png', 'jpeg'],
                                      accept_multiple_files=True)
 
     # If the user clicks on the button
@@ -68,12 +68,12 @@ def main():
                         with col2:
                             with st.spinner("Colorizing image..."):
                                 out_img, new_img = colorize_image(file, loaded_model)
-                                new_img.save("IMG_" + str(i + 1) + ".jpg")
+                                new_img.save("IMG_" + str(i+1) + ".jpg")
                                 st.image(out_img, use_column_width="always")
 
                     else:
                         out_img, new_img = colorize_image(file, loaded_model)
-                        new_img.save("IMG_" + str(i + 1) + ".jpg")
+                        new_img.save("IMG_" + str(i+1) + ".jpg")
 
             if len(uploaded_file) > 1:
                 # Create a zip file
