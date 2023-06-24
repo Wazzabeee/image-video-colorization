@@ -12,7 +12,7 @@ The following features are available:
 - Colorization of Youtube videos.
 
 ## Interface
-<img src="interface.png"/>
+<img src="interface.gif"/>
 
 ## Todos
 Other models based on GANs will probably be implemented in the future if my application for a community grant to gain access to a GPU on Hugging Face is successful.
