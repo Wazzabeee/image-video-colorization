@@ -1,2 +1,2 @@
-# image-video-colorization
+# Image Video Colorization
  
