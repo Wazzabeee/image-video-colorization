@@ -38,12 +38,12 @@ def main():
     loaded_model = change_model(current_model, model)
     st.write(f"Model is now {model}")
 
-    uploaded_file = st.file_uploader("Upload your video here...", type=['mp4'])
+    uploaded_file = st.file_uploader("Upload your video here...", type=['mp4', 'mov', 'avi', 'mkv'])
 
     if st.button("Colorize"):
         if uploaded_file is not None:
             file_extension = os.path.splitext(uploaded_file.name)[1].lower()
-            if file_extension == '.mp4':
+            if file_extension in ['.mp4', '.avi', '.mov', '.mkv']:
                 # Save the video file to a temporary location
                 temp_file = tempfile.NamedTemporaryFile(delete=False)
                 temp_file.write(uploaded_file.read())
