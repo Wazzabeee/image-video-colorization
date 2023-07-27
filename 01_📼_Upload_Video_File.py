@@ -32,7 +32,7 @@ with col2:
 
 def main():
     model = st.selectbox(
-        "Select Model (Both models have their pros and cons, I recommend to try both and keep the best for your task)",
+        "Select Model (Both models have their pros and cons, I recommend trying both and keeping the best for your task)",
         ["ECCV16", "SIGGRAPH17"], index=0)
 
     loaded_model = change_model(current_model, model)
