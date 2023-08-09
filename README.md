@@ -6,6 +6,8 @@ The aim was to deploy a video image colorization application. To this end, I hav
 
 The interface for the models was designed on Streamlit and deployed in a [Space on Hugging Face](https://huggingface.co/spaces/Wazzzabeee/image-video-colorization).
 
+The tutorial with all the design steps is available on my [Medium blog](https://medium.com/geekculture/creating-a-web-app-to-colorize-images-and-youtube-videos-80f5be2d0f68).
+
 The following features are available:
 - Colorization of a batch of images.
 - Colorization of MP4, MKV and AVI video files.
