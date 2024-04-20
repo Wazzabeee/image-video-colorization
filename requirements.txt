@@ -2,7 +2,7 @@ ipython==8.5.0
 moviepy==1.0.3
 numpy==1.23.2
 opencv_python==4.7.0.68
-Pillow==9.5.0
+Pillow==10.3.0
 scikit-image==0.20.0
 streamlit==1.22.0
 torch==1.13.1
