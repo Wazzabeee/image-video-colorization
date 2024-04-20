@@ -1,4 +1,4 @@
-ipython==8.5.0
+ipython==8.10.0
 moviepy==1.0.3
 numpy==1.23.2
 opencv_python==4.7.0.68
