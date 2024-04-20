@@ -16,6 +16,18 @@ The following features are available:
 ## Interface
 <img src="interface.gif"/>
 
+## Running Locally
+If you want to process longer videos and you're limited by the Hugging Face space memory's limits, you can run this app locally.
+
+`ffmpeg.exe` is needed to run this app, you can install it using `brew install ffmpeg` and update the `IMAGEIO_FFMPEG_EXE` environment variable accordingly.
+
+```bash
+git clone https://github.com/Wazzabeee/image-video-colorization
+cd image-video-colorization
+pip install -r requirements.txt
+streamlit run 01_📼_Upload_Video_File.py
+```
+
 ## Todos
 Other models based on GANs will probably be implemented in the future if my application for a community grant to gain access to a GPU on Hugging Face is successful.
 

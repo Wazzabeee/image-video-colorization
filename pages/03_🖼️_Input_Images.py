@@ -3,47 +3,47 @@ import zipfile
 
 import streamlit as st
 from PIL import Image
-from streamlit_lottie import st_lottie
 
-from models.deep_colorization.colorizers import eccv16
-from utils import colorize_image, change_model, load_lottieurl
+from utils import change_model, load_model, setup_columns, set_page_config, colorize_image
 
-st.set_page_config(page_title="Image & Video Colorizer", page_icon="🎨", layout="wide")
-
-
-loaded_model = eccv16(pretrained=True).eval()
-current_model = "None"
-
-
-col1, col2 = st.columns([1, 3])
-with col1:
-    lottie = load_lottieurl("https://assets5.lottiefiles.com/packages/lf20_RHdEuzVfEL.json")
-    st_lottie(lottie)
+set_page_config()
+loaded_model = load_model()
+col2 = setup_columns()
+current_model = None
 
 with col2:
-    st.write("""
+    st.write(
+        """
     ## B&W Images Colorizer
     ##### Input a black and white image and get a colorized version of it.
     ###### ➠ If you want to colorize multiple images just upload them all at once.
     ###### ➠ Uploading already colored images won't raise errors but images won't look good.
-    ###### ➠ I recommend starting with the first model and then experimenting with the second one.""")
+    ###### ➠ I recommend starting with the first model and then experimenting with the second one."""
+    )
 
 
 def main():
+    """
+    Main function
+    """
     model = st.selectbox(
-        "Select Model (Both models have their pros and cons, I recommend trying both and keeping the best for you task)",
-        ["ECCV16", "SIGGRAPH17"], index=0)
+        "Select Model (Both models have their pros and cons, "
+        "I recommend trying both and keeping the best for you task)",
+        ["ECCV16", "SIGGRAPH17"],
+        index=0,
+    )
 
     # Make the user select a model
     loaded_model = change_model(current_model, model)
     st.write(f"Model is now {model}")
 
     # Ask the user if he wants to see colorization
-    display_results = st.checkbox('Display results in real time', value=True)
+    display_results = st.checkbox("Display results in real time", value=True)
 
     # Input for the user to upload images
-    uploaded_file = st.file_uploader("Upload your images here...", type=['jpg', 'png', 'jpeg'],
-                                     accept_multiple_files=True)
+    uploaded_file = st.file_uploader(
+        "Upload your images here...", type=["jpg", "png", "jpeg"], accept_multiple_files=True
+    )
 
     # If the user clicks on the button
     if st.button("Colorize"):
@@ -56,11 +56,11 @@ def main():
                 with col2:
                     st.markdown('<p style="text-align: center;">After</p>', unsafe_allow_html=True)
             else:
-                col1, col2, col3 = st.columns(3)
+                col1, col2, _ = st.columns(3)
 
             for i, file in enumerate(uploaded_file):
                 file_extension = os.path.splitext(file.name)[1].lower()
-                if file_extension in ['.jpg', '.png', '.jpeg']:
+                if file_extension in [".jpg", ".png", ".jpeg"]:
                     image = Image.open(file)
                     if display_results:
                         with col1:
@@ -68,12 +68,12 @@ def main():
                         with col2:
                             with st.spinner("Colorizing image..."):
                                 out_img, new_img = colorize_image(file, loaded_model)
-                                new_img.save("IMG_" + str(i+1) + ".jpg")
+                                new_img.save("IMG_" + str(i + 1) + ".jpg")
                                 st.image(out_img, use_column_width="always")
 
                     else:
                         out_img, new_img = colorize_image(file, loaded_model)
-                        new_img.save("IMG_" + str(i+1) + ".jpg")
+                        new_img.save("IMG_" + str(i + 1) + ".jpg")
 
             if len(uploaded_file) > 1:
                 # Create a zip file
@@ -98,11 +98,12 @@ def main():
                     )
 
         else:
-            st.warning('Upload a file', icon="⚠️")
+            st.warning("Upload a file", icon="⚠️")
 
 
 if __name__ == "__main__":
     main()
     st.markdown(
         "###### Made with :heart: by [Clément Delteil](https://www.linkedin.com/in/clementdelteil/) [![this is an "
-        "image link](https://i.imgur.com/thJhzOO.png)](https://www.buymeacoffee.com/clementdelteil)")
+        "image link](https://i.imgur.com/thJhzOO.png)](https://www.buymeacoffee.com/clementdelteil)"
+    )
